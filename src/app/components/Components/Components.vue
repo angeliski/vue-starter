@@ -449,6 +449,17 @@
             @change="onAutocompleteChange" />
         </vue-grid-item>
       </vue-grid-row>
+
+      <vue-grid-row>
+        <vue-grid-item class="vueGridItem">
+          <h2>DataTable</h2>
+          <vue-data-table
+            :header="dataTableHeader"
+            :data="dataTableData"
+            placeholder="Search"
+            @click="dataTableClick" />
+        </vue-grid-item>
+      </vue-grid-row>
     </vue-grid>
   </div>
 </template>
@@ -482,10 +493,12 @@
   import VueMarkdown                        from '../../shared/components/VueMarkdown/VueMarkdown';
   import VueGridRow                         from '../../shared/components/VueGridRow/VueGridRow';
   import VueAutocomplete                    from '../../shared/components/VueAutocomplete/VueAutocomplete';
-  import { AutocompleteOptionsFixture }     from '../../shared/components/VueAutocomplete/fixtures/IAutocompleteFixture';
-  import VueBadge                           from '../../shared/components/VueBadge/VueBadge';
-  import FormExample                        from '../FormExample/FormExample';
-  import { IAutocompleteOption }            from '../../shared/components/VueAutocomplete/IAutocompleteOption';
+  import { AutocompleteOptionsFixture }                   from '../../shared/components/VueAutocomplete/fixtures/IAutocompleteFixture';
+  import VueBadge                                         from '../../shared/components/VueBadge/VueBadge';
+  import FormExample                                      from '../FormExample/FormExample';
+  import { IAutocompleteOption }                          from '../../shared/components/VueAutocomplete/IAutocompleteOption';
+  import VueDataTable                                     from '../../shared/components/VueDataTable/VueDataTable';
+  import { dataTableDataFixture, dataTableHeaderFixture } from '../../shared/components/VueDataTable/DataTableFixtures';
 
   export default {
     metaInfo:   {
@@ -534,6 +547,7 @@
       ],
     },
     components: {
+      VueDataTable,
       FormExample,
       VueBadge,
       VueAutocomplete,
@@ -606,6 +620,8 @@
         inputValue:          'test',
         autocompleteOptions: [],
         autocompleteLoading: false,
+        dataTableHeader:     dataTableHeaderFixture,
+        dataTableData:       dataTableDataFixture,
       };
     },
     methods:    {
@@ -630,7 +646,6 @@
         console.log(option);
         this.selectedOption = option;
       },
-      /* istanbul ignore next */
       onRequest(query: string, shouldReturn: boolean = true) {
         this.autocompleteLoading = true;
 
@@ -653,6 +668,9 @@
       },
       onAutocompleteChange(option: IAutocompleteOption) {
         console.log(option);
+      },
+      dataTableClick(row: any) {
+        console.log(row);
       },
     },
   };
